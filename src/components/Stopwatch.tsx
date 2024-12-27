@@ -11,7 +11,7 @@ function Stopwatch() {
             // Every sec
             interval = setInterval(() => {
                 setTime((time) => time + 1);
-            }, 1000);
+            }, 1);
         };
 
         // Clear interval
@@ -55,11 +55,23 @@ function Stopwatch() {
 
     }, [isRunning, time]);
 
+    const formatTime = () => {
+        const milliseconds = time % 1000;
+        const seconds = Math.floor(time / 1000);
+        const minutes = Math.floor(seconds / 60);
+
+        const millisecondsText = (milliseconds / 10) < 10 ? `0${Math.floor(milliseconds / 10)}` : `${Math.floor(milliseconds / 10)}`;
+        const secondsText = (seconds % 60) < 10 ? `0${seconds % 60}` : `${seconds % 60}`;
+        const minutesText = minutes;
+
+        return `${minutesText}:${secondsText}:${millisecondsText}`;
+    }
+
     return (
         <div>
             <h1>Cube Timer</h1>
 
-            <p>Time: {time}</p>
+            <p>Time: {formatTime()}</p>
         </div>
     );
 }
