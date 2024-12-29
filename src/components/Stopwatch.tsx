@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import './Stopwatch.css';
 
 function Stopwatch() {
     const [isRunning, setIsRunning] = useState(false);
@@ -70,10 +71,10 @@ function Stopwatch() {
     }
 
     return (
-        <div>
-            <h1>Cube Timer</h1>
-
-            <p>Time: {formatTime()}</p>
+        <div id = "container">
+            <div id = "stopwatch">
+                <h1>{formatTime()}</h1>
+            </div>  
         </div>
     );
 }
