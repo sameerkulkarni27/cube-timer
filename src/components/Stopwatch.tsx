@@ -4,13 +4,13 @@ import './Stopwatch.css';
 function Stopwatch() {
     const [isRunning, setIsRunning] = useState(false);
     const [time, setTime] = useState(0);
-    const [start, setStart] = useState(0);
+    const [collectedTimes, setCollectedTimes] = useState<number[]>([]);
 
     useEffect(() => {
         let interval = null;
 
         if (isRunning) {
-            setStart(Date.now() - time);
+            const start = Date.now() - time;
 
             interval = setInterval(() => {
                 setTime(Date.now() - start);
@@ -24,7 +24,7 @@ function Stopwatch() {
             }
         };
 
-    }, [isRunning, start]);
+    }, [isRunning, time]);
 
     useEffect(() => {
         const spacePressed = (event: KeyboardEvent) => {
@@ -33,8 +33,10 @@ function Stopwatch() {
 
                 if (isRunning) {
                     // Pause 
-
                     setIsRunning(false);
+
+                    // Add time to collectedTimes
+                    setCollectedTimes((prevTime) => [...prevTime, time]);
                 }
                 else if (time == 0 && !isRunning) {
                     // New solve
@@ -58,10 +60,10 @@ function Stopwatch() {
 
     }, [isRunning, time]);
 
-    const formatTime = () => {
-        const milliseconds = Math.floor(time % 1000);
-        const seconds = Math.floor(time / 1000) % 60;
-        const minutes = Math.floor(time / 60000) % 60;
+    const formatTime = (timeBeingFormatted: number) => {
+        const milliseconds = Math.floor(timeBeingFormatted % 1000);
+        const seconds = Math.floor(timeBeingFormatted / 1000) % 60;
+        const minutes = Math.floor(timeBeingFormatted / 60000) % 60;
 
         const millisecondsText = ("0" + milliseconds).slice(-2);
         const secondsText = ("0" + seconds).slice(-2);
@@ -73,8 +75,17 @@ function Stopwatch() {
     return (
         <div id = "container">
             <div id = "stopwatch">
-                <h1>{formatTime()}</h1>
+                <h1>{formatTime(time)}</h1>
             </div>  
+
+            <div id = "times">
+                <h2>Collected Times</h2>
+                <ol>
+                    {collectedTimes.map((collectedTime) => (
+                        <li>{formatTime(collectedTime)}</li>
+                    ))}
+                </ol>
+            </div>
         </div>
     );
 }
