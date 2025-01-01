@@ -1,9 +1,37 @@
 body {
+    /*background-color: lightcoral;*/
+
+    display: flex;
     justify-content: center;
+    align-items: center;
+   
+    margin: 0;
+    height: 100vh;
 }
 
 #container {
-    justify-content: center;
+    /*background-color: green;*/
+
     display: flex;
-    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+
+    width: 90vh; 
+    height: 90vh; 
+    padding: 20px; 
+    box-sizing: border-box;
+}
+
+#stopwatch {
+    /*background-color: blue;*/
+
+    font-family: 'Courier New', monospace;
+    margin-right: auto;
+}
+
+#times {
+    /*background-color: brown;*/
+
+    font-family: Garamond, serif;
+    margin-left: auto;
 }
