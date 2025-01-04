@@ -72,6 +72,16 @@ function Stopwatch() {
         return `${minutesText}:${secondsText}:${millisecondsText}`;
     }
 
+    const getAverage = () => {
+        if (collectedTimes.length == 0) {
+            return 0;
+        }
+
+        const total = collectedTimes.reduce((a, b) => a + b);
+        return total / collectedTimes.length;
+        
+    }
+
     return (
         <div id = "container">
             <div id = "stopwatch">
@@ -85,6 +95,9 @@ function Stopwatch() {
                         <li>{formatTime(collectedTime)}</li>
                     ))}
                 </ol>
+            </div>
+            <div id = "data">
+                <h3>Average: {formatTime(getAverage())}</h3>
             </div>
         </div>
     );
