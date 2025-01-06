@@ -61,7 +61,7 @@ function Stopwatch() {
     }, [isRunning, time]);
 
     const formatTime = (timeBeingFormatted: number) => {
-        const milliseconds = Math.floor(timeBeingFormatted % 1000);
+        const milliseconds = Math.floor((timeBeingFormatted % 1000) / 10);
         const seconds = Math.floor(timeBeingFormatted / 1000) % 60;
         const minutes = Math.floor(timeBeingFormatted / 60000) % 60;
 
@@ -82,6 +82,22 @@ function Stopwatch() {
         
     }
 
+    const getBestTime = () => {
+        if (collectedTimes.length == 0) {
+            return 0;
+        }
+
+        return Math.min(...collectedTimes);
+    }
+
+    const getWorstTime = () => {
+        if (collectedTimes.length == 0) {
+            return 0;
+        }
+
+        return Math.max(...collectedTimes);
+    }
+
     return (
         <div id = "container">
             <div id = "stopwatch">
@@ -97,7 +113,10 @@ function Stopwatch() {
                 </ol>
             </div>
             <div id = "data">
-                <h3>Average: {formatTime(getAverage())}</h3>
+                <p>Average: {formatTime(getAverage())}</p>
+                <p>Best Time: {formatTime(getBestTime())}</p>
+                <p>Worst Time: {formatTime(getWorstTime())}</p>
+                <p>Number of Attempts: {collectedTimes.length}</p>
             </div>
         </div>
     );
